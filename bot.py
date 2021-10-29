@@ -6,6 +6,7 @@ from name_generator import NameGenerator
 # Flemme de faire un truc avec une date je fais un truc déguelasse
 LAUNCH_HOUR = 8
 FILE = "prenoms.txt"
+DISCORD_ID = ""
 TOKEN = 'OTAyODI5ODE1MDgwNTc0OTc2.YXkHyQ.PzqWs80sXxkDLIyVP5gaBFxh9Io'
 
 
