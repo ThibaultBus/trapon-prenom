@@ -16,6 +16,7 @@ class Loop:
     def time_before_event(self) -> Tuple[int, int, int]:
         # On calcule la date du prochain event (aujourd'hui, ou demain si l'heure de lancement est déjà passé)
         now = datetime.now()
+        print()
         event = datetime(now.year, now.month,
                          now.day, self.event_hour)
 
