@@ -2,34 +2,28 @@ import discord
 from trapon_client import TraponClient
 from loop import Loop
 from name_generator import NameGenerator
+from dotenv import dotenv_values
 
-# Flemme de faire un truc avec une date je fais un truc déguelasse
-LAUNCH_HOUR = 8
-FILE = "prenoms.txt"
-DISCORD_ID = ""
-TOKEN = 'OTAyODI5ODE1MDgwNTc0OTc2.YXkHyQ.PzqWs80sXxkDLIyVP5gaBFxh9Io'
+config = dotenv_values(".env")
 
-
-client = TraponClient()
-name_generator = NameGenerator(FILE)
-loop = Loop(LAUNCH_HOUR, client, name_generator)
+client = TraponClient(config["TARGET_USER"])
+name_generator = NameGenerator(config["FILE"])
+loop = Loop(int(config["LAUNCH_HOUR"]), client, name_generator)
 
 
-@client.event
+@ client.event
 async def on_message(message):
-    if message.author == client.user:
+    if client.is_message_from_bot(message):
         return
 
     if message.content.startswith('$trapon'):
-        if client.channel == None or client.channel != message.channel:
-            client.channel = message.channel
-            await client.channel.send("J'utiliserai ce channel pour mes annonces dorénavant !")
+        await client.on_new_bot_call(message)
         await client.send_new_name(name_generator.get_random_name())
 
 
-@client.event
+@ client.event
 async def on_ready():
-    print('We have logged in as {0.user}'.format(client))
+    await client.on_login()
 
 
-client.run(TOKEN)
+client.run(config["TOKEN"])
