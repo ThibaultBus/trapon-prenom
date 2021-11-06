@@ -7,7 +7,7 @@ import os
 
 config = load_dotenv()
 
-client = TraponClient(os.getenv("TARGET_USER"))
+client = TraponClient(int(os.getenv("TARGET_USER_ID")))
 name_generator = NameGenerator(os.getenv("FILE"))
 loop = Loop(int(os.getenv("LAUNCH_HOUR")), client, name_generator)
 

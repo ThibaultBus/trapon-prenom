@@ -5,10 +5,10 @@ import discord
 
 class TraponClient(discord.Client):
 
-    def __init__(self, target_user: str = "Someone", *, loop=None, **options):
+    def __init__(self, target_user_id: int, *, loop=None, **options):
         super().__init__(loop=loop, **options)
         self.channel: discord.TextChannel = None
-        self.target_user: str = target_user
+        self.target_user_id = target_user_id
 
     async def send_msg(self, msg: str):
         if self.channel != None:
@@ -17,8 +17,9 @@ class TraponClient(discord.Client):
             print("Aucun channel choisi")
 
     async def send_new_name(self, name: str):
-        if self.channel != None:
-            await self.channel.send('{0} s\'appelle maintenant **{1}**'.format(self.target_user, name))
+        print("Trying to send message")
+        if self.channel != None and self.target_user_id != None:
+            await self.channel.send('<@{0}> s\'appelle maintenant **{1}**'.format(self.target_user_id, name))
 
     def is_message_from_bot(self, message: discord.Message):
         return message.author == self.user
