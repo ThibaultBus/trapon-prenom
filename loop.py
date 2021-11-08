@@ -36,12 +36,11 @@ class Loop:
 
     def reset(self):
         (secs, mins, hours) = self.time_before_event()
+        print(secs, mins, hours)
         self.routine.change_interval(seconds=secs, minutes=mins, hours=hours)
 
     @tasks.loop(hours=24.0)
     async def routine(self):
-        # On règle l'heure du prochain appel au cas où on ait du retard à cause des envois de messages etc.
-        self.reset()
         await self.client.send_new_name(self.name_generator.get_random_name())
 
     @routine.before_loop
